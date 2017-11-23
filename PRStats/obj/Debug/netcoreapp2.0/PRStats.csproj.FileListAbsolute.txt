@@ -1,0 +1,10 @@
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/bin/Debug/netcoreapp2.0/PRStats.deps.json
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/bin/Debug/netcoreapp2.0/PRStats.runtimeconfig.json
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/bin/Debug/netcoreapp2.0/PRStats.runtimeconfig.dev.json
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/bin/Debug/netcoreapp2.0/PRStats.dll
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/bin/Debug/netcoreapp2.0/PRStats.pdb
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/obj/Debug/netcoreapp2.0/PRStats.csproj.CoreCompileInputs.cache
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/obj/Debug/netcoreapp2.0/PRStats.AssemblyInfoInputs.cache
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/obj/Debug/netcoreapp2.0/PRStats.AssemblyInfo.cs
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/obj/Debug/netcoreapp2.0/PRStats.dll
+/Users/jonbanashek/projects/interviews/redox/dn/PRStats/obj/Debug/netcoreapp2.0/PRStats.pdb
