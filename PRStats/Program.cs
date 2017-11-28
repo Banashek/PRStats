@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,33 +31,34 @@ namespace PRStats
             var prs = await pullRequester.GetAllPRsForOrg();
 
             // Print how many pull requests each repository has
-            Console.WriteLine("Results for the " + orgname + " organization");
-            Console.WriteLine("--------------------------------------------");
-            foreach (var r in prs.Repositories)
-            {
-                Console.WriteLine(r.Key.Name + " has " + r.Value.ToList().Count.ToString() + " total pull requests.");
-            }
+            // Console.WriteLine("Results for the " + orgname + " organization");
+            // Console.WriteLine("--------------------------------------------");
+            // foreach (var r in prs.Repositories)
+            // {
+            //     Console.WriteLine(r.Key.Name + " has " + r.Value.ToList().Count.ToString() + " total pull requests.");
+            // }
+            // Console.WriteLine("\n\n");
+
+
+            
+
+            // The following is a demo for just the Lodash repository
+            var pullRequestsForLodash = prs.Repositories.First().Value;
+            var testDate = new DateTime(2017, 10, 1);
+
+            // How many pull requests week over week since 2017-08-01 ?
+            PullRequestInfo.LogNumberOfPRsMergedWeekOverWeekByCreatedAt(pullRequestsForLodash, testDate);
             Console.WriteLine("\n\n");
 
-            // How many pull requests were merged week over week across the organization
-            Console.WriteLine("Weekly pull request overview for all repos under the " + orgname + " organization\n");
-            Console.WriteLine("Week of:\tNo. of PRs");
-            Console.WriteLine("--------\t----------");
-            prs.Repositories
-                .SelectMany(r => r.Value) // Extract just the pull requests
-                .Where(pr => pr.MergedAt.HasValue)
-                .OrderBy(pr => pr.MergedAt)
-                .GroupBy(pr => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(pr.MergedAt.Value, CalendarWeekRule.FirstDay, DayOfWeek.Monday))
-                .ToList()
-                // .ForEach(g => Console.WriteLine("There are " + g.Count() + " merged pull requests for the week beginning " + firstDayOfWeekForDate(g.First().MergedAt.Value.Date).ToShortDateString()));
-                .ForEach(g => Console.WriteLine(firstDayOfWeekForDate(g.First().MergedAt.Value.Date).ToShortDateString() + "  \t" + g.Count()));
-        }
+            // What was the average time between the creation and the merge of a pull request? 
+            // (Open pull requests that have not been closed are weighted based on the time between their created_at date and the current date)
+            PullRequestInfo.LogCreationToMergeTimeAverageWeekOverWeekByCreatedAt(prs.Repositories.First().Value, testDate);
+            Console.WriteLine("\n\n");
 
-        private static DateTime firstDayOfWeekForDate(DateTime dt)
-        {
-            int daysDiff = dt.DayOfWeek - DayOfWeek.Monday;
-            daysDiff = daysDiff < 0 ? daysDiff + 7 : daysDiff;
-            return dt.AddDays(-1 * daysDiff).Date;
+            // What was the average time between the creation of the first commit and the merge of a pull request? 
+            // (Open pull requests that have not been closed are weighted based on the time between their commit's created_at date and the current date)
+            PullRequestInfo.LogFirstCommitToMergeTimeAverageWeekOverWeekByCreatedAt(pullRequester, prs.Repositories.First().Value, testDate).Wait();
+            Console.WriteLine("\n\n");
         }
     }
 }

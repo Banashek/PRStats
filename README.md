@@ -23,3 +23,6 @@ While I would normally take a purely functional approach to something like this,
 * Cd into the `PRStats.Tests/` directory
 * `dotnet test`
 
+## TODO
+- Logging
+- Handling of end of year date overlaps

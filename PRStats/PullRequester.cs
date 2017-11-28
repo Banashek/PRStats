@@ -93,6 +93,29 @@ namespace PRStats
             return new KeyValuePair<Repository, IEnumerable<PullRequest>>(repo, prs);
         }
 
+        public async Task<IEnumerable<PullRequest>> GetFirstCommitsForPRs(IEnumerable<PullRequest> prs)
+        {
+            var res = new Dictionary<PullRequest, IEnumerable<Commit>>();
+            foreach (var pr in prs)
+            {
+                pr.Commits = await GetFirstCommitForPR(pr);
+                var commits = await GetFirstCommitForPR(pr);
+                res.Add(pr, commits);
+            }
+            return prs;
+        }
+
+        public async Task<List<Commit>> GetFirstCommitForPR(PullRequest pr)
+        {
+            var client = _getHttpClient(_token);
+            var url = pr.CommitsUrl;
+            var res = await client.GetAsync(url);
+
+            var content = await res.Content.ReadAsStringAsync();
+            var commits = JsonConvert.DeserializeObject<List<Commit>>(content);
+            return commits;
+        }
+
         public async Task<IEnumerable<PullRequest>> GetPRsByPageForRepository(Repository repo, int page)
         {
             var client = _getHttpClient(_token);
